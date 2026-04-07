@@ -5,15 +5,133 @@ import { getStoredToken, handleCallback } from './modules/spotify/SpotifyAuth'
 import { initiateLogin } from './modules/spotify/SpotifyAuth'
 import { RoomScreen } from './screens/RoomScreen/RoomScreen'
 
+const MONO: React.CSSProperties = { fontFamily: 'Courier New, monospace' }
+
+const isMobile = () =>
+  /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.innerWidth < 768
+
+function MobileWall() {
+  return (
+    <div style={{
+      position: 'fixed', inset: 0,
+      background: '#0d0b08',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      gap: '1.4rem', padding: '2rem', textAlign: 'center',
+    }}>
+      <div style={{ fontSize: '2.4rem' }}>🎚️</div>
+      <h1 style={{
+        fontFamily: 'Georgia, serif', fontWeight: 400,
+        fontSize: '1.6rem', color: 'var(--color-text)',
+        letterSpacing: '0.06em', margin: 0,
+      }}>
+        The Vinyl Room
+      </h1>
+      <p style={{
+        ...MONO, fontSize: '0.72rem',
+        color: 'var(--color-text-muted)',
+        letterSpacing: '0.1em', lineHeight: 1.9,
+        maxWidth: '280px', margin: 0,
+      }}>
+        Esta experiencia está diseñada para pantallas grandes.
+        <br /><br />
+        Ábrela desde tu ordenador para disfrutarla como se merece.
+      </p>
+      <div style={{
+        marginTop: '0.5rem',
+        border: '1px solid rgba(232,224,212,0.15)',
+        padding: '0.9rem 1.6rem',
+        ...MONO, fontSize: '0.65rem',
+        color: 'rgba(232,224,212,0.3)',
+        letterSpacing: '0.14em', textTransform: 'uppercase',
+      }}>
+        spotify-vinyl-sand.vercel.app
+      </div>
+    </div>
+  )
+}
+
+function OnboardingInfo() {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: '0.4rem' }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          background: 'none', border: 'none', cursor: 'pointer',
+          ...MONO, fontSize: '0.6rem',
+          color: 'rgba(232,224,212,0.3)',
+          letterSpacing: '0.16em', textTransform: 'uppercase',
+          padding: '0.3rem',
+          transition: 'color 200ms',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.color = 'rgba(232,224,212,0.6)')}
+        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(232,224,212,0.3)')}
+      >
+        {open ? '— cerrar' : '¿qué es esto? —'}
+      </button>
+
+      {open && (
+        <div style={{
+          marginTop: '0.8rem',
+          maxWidth: '300px',
+          padding: '1.2rem 1.5rem',
+          border: '1px solid rgba(232,224,212,0.1)',
+          backdropFilter: 'blur(8px)',
+          background: 'rgba(0,0,0,0.45)',
+          textAlign: 'left',
+        }}>
+          <p style={{
+            ...MONO, fontSize: '0.65rem',
+            color: 'rgba(232,224,212,0.55)',
+            letterSpacing: '0.06em', lineHeight: 2,
+            margin: 0,
+          }}>
+            Una sala de vinilos virtual conectada a tu Spotify.
+            Pon un disco en el plato, escucha la cara A,
+            dale la vuelta, escucha la cara B — como siempre fue.
+          </p>
+          <div style={{
+            marginTop: '1rem', paddingTop: '0.8rem',
+            borderTop: '1px solid rgba(232,224,212,0.08)',
+          }}>
+            <p style={{
+              ...MONO, fontSize: '0.58rem',
+              color: 'rgba(200,169,110,0.65)',
+              letterSpacing: '0.14em', textTransform: 'uppercase',
+              margin: '0 0 0.5rem',
+            }}>
+              Necesitas
+            </p>
+            <p style={{
+              ...MONO, fontSize: '0.62rem',
+              color: 'rgba(232,224,212,0.4)',
+              letterSpacing: '0.05em', lineHeight: 2,
+              margin: 0,
+            }}>
+              · Spotify Premium<br />
+              · Spotify abierto en algún dispositivo<br />
+              · Navegador de escritorio
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function LoginScreen() {
   const [entering, setEntering] = useState(false)
+  const [mobile] = useState(isMobile)
 
   const handleEnter = () => {
     if (entering) return
     setEntering(true)
-    // Let the "enter" animation play before redirecting to Spotify
     setTimeout(() => initiateLogin(), 1400)
   }
+
+  if (mobile) return <MobileWall />
 
   return (
     <div style={{ position: 'fixed', inset: 0, overflow: 'hidden' }}>
@@ -64,7 +182,7 @@ function LoginScreen() {
           The Vinyl Room
         </h1>
         <p style={{
-          fontFamily: 'Courier New, monospace',
+          ...MONO,
           fontSize: '0.68rem',
           color: 'var(--color-text-muted)',
           letterSpacing: '0.18em',
@@ -81,7 +199,7 @@ function LoginScreen() {
             background: 'none',
             border: '1px solid rgba(232, 224, 212, 0.5)',
             color: 'var(--color-text)',
-            fontFamily: 'Courier New, monospace',
+            ...MONO,
             fontSize: '0.72rem',
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
@@ -101,6 +219,8 @@ function LoginScreen() {
         >
           Entrar
         </button>
+
+        <OnboardingInfo />
       </div>
     </div>
   )
