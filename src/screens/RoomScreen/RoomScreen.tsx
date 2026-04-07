@@ -8,6 +8,7 @@ import { CoverFlow } from './CoverFlow'
 import { AlbumDetailOverlay } from './AlbumDetailOverlay'
 import { TurntableOverlay } from './TurntableOverlay'
 import { FlipModal } from './FlipModal'
+import { OnboardingTour, hasSeenOnboarding } from './OnboardingTour'
 import styles from './RoomScreen.module.css'
 
 export function RoomScreen() {
@@ -29,6 +30,7 @@ export function RoomScreen() {
 
   const [detailAlbum, setDetailAlbum] = useState<SpotifyAlbum | null>(null)
   const [showFlip, setShowFlip] = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(!hasSeenOnboarding())
 
   // Auto-show flip modal when side A ends
   useEffect(() => {
@@ -137,6 +139,11 @@ export function RoomScreen() {
           onConfirm={handleConfirmFlip}
           onCancel={handleCancelFlip}
         />
+      )}
+
+      {/* First-time onboarding tour */}
+      {showOnboarding && (
+        <OnboardingTour onDone={() => setShowOnboarding(false)} />
       )}
     </div>
   )
