@@ -1,0 +1,101 @@
+.shelf {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  padding: 3rem 2rem;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.albumCard {
+  cursor: pointer;
+  position: relative;
+  transition: transform 300ms ease-in-out;
+}
+
+.albumCard:hover {
+  transform: translateY(-8px);
+}
+
+.albumCard:hover .cover {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+  transition: box-shadow 300ms ease-in-out;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.coverPlaceholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+}
+
+.albumInfo {
+  margin-top: 0.6rem;
+  padding: 0 0.1rem;
+}
+
+.albumName {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.2rem;
+}
+
+.artistName {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loading,
+.empty {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  text-align: center;
+  padding: 4rem 0;
+}

@@ -1,0 +1,64 @@
+.room {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #0c0c0c;
+}
+
+.backBtn {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  z-index: 20;
+  background: rgba(10, 7, 3, 0.7);
+  border: 1px solid rgba(200, 169, 110, 0.2);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.backBtn:hover {
+  color: var(--color-text);
+  border-color: rgba(200, 169, 110, 0.4);
+}
+
+/* Invisible clickable hotspots over room zones */
+.hotspot {
+  position: fixed;
+  top: 15%;
+  bottom: 35%;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.hotspotLeft {
+  left: 2%;
+  width: 32%;
+}
+
+.hotspotRight {
+  right: 2%;
+  width: 28%;
+}
+
+.hotspotLabel {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: rgba(200, 169, 110, 0);
+  text-transform: uppercase;
+  transition: color 300ms ease-in-out;
+  pointer-events: none;
+}
+
+.hotspot:hover .hotspotLabel {
+  color: rgba(200, 169, 110, 0.5);
+}

@@ -1,0 +1,8 @@
+.canvas {
+  position: fixed;
+  inset: 0;
+  display: block;
+  cursor: default;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}

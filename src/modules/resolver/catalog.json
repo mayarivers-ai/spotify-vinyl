@@ -1,0 +1,28 @@
+{
+  "albums": [
+    {
+      "spotify_id": "1ATL5GLyefJaxhQzSPVrLX",
+      "discogs_id": 87523,
+      "title": "Kind of Blue",
+      "artist": "Miles Davis",
+      "year": 1959,
+      "label": "Columbia",
+      "sides": {
+        "A": ["6TtRXIaHlLIx6YVWFZ5VNn", "6Q3W5WpO1xWAzCVLCkXECq", "3ZsQEPK9gYUqrUNkJrMQSH"],
+        "B": ["3ISMFPf9fktJNWfwrqXiZp", "2Ys2KoFOCUjvFEu7DWL3Fg"]
+      }
+    },
+    {
+      "spotify_id": "6dVIqQ8qmQ5GBnJ9shOYCE",
+      "discogs_id": 249504,
+      "title": "Blue Train",
+      "artist": "John Coltrane",
+      "year": 1957,
+      "label": "Blue Note",
+      "sides": {
+        "A": ["0Mh3K7qhJnkRsMuZdOQ5ZG", "52obTobMpVVvXaEy4NJJPQ"],
+        "B": ["2cW4FOcObjKdJRHPMnPBLg", "3RQQmkQEvNCY4prGKE6oc5", "6FMnVFKFjYhZdnUQaKVCNq"]
+      }
+    }
+  ]
+}

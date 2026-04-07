@@ -1,0 +1,94 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 6vh;
+  pointer-events: none;
+}
+
+.label {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+}
+
+.status {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  pointer-events: none;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 90vw;
+  padding: 12px 16px;
+  pointer-events: all;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  /* Pixel-art style scrollable shelf strip */
+  background: rgba(10, 7, 3, 0.6);
+  border-top: 1px solid rgba(200, 169, 110, 0.15);
+}
+
+.grid::-webkit-scrollbar {
+  display: none;
+}
+
+.vinyl {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 200ms ease-in-out;
+}
+
+.vinyl:hover {
+  transform: translateY(-6px);
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  image-rendering: pixelated;
+  filter: saturate(0.85) brightness(0.9);
+  transition: filter 200ms ease-in-out;
+}
+
+.vinyl:hover .cover {
+  filter: saturate(1) brightness(1.05);
+}
+
+.coverPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: #2a1a0a;
+}
+
+.spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(0, 0, 0, 0.5);
+}

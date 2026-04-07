@@ -1,0 +1,359 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.emptyMsg {
+  margin: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+/* ── Turntable area (top half) ── */
+.turntableArea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding-top: 3.5rem;
+}
+
+/* ── Tonearm ── */
+.tonearmWrap {
+  position: absolute;
+  top: 3rem;
+  right: calc(50% - 180px);
+  width: 28px;
+  height: 160px;
+  transform-origin: top center;
+  transition: transform 1s ease-in-out;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.tonearmPivot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #888, #444);
+  border: 1px solid #666;
+  margin: 0 auto;
+}
+
+.tonearmArm {
+  width: 4px;
+  height: 120px;
+  background: linear-gradient(to bottom, #777, #555);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+.tonearmHead {
+  width: 14px;
+  height: 10px;
+  background: #666;
+  border-radius: 2px;
+  margin: 0 auto;
+  border: 1px solid #888;
+}
+
+/* ── Vinyl disc ── */
+.disc {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  background: #0d0d0d;
+  box-shadow:
+    0 12px 50px rgba(0,0,0,0.85),
+    0 4px 16px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  border: none;
+  padding: 0;
+  /* Override button defaults */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.spinning {
+  animation: spin 1.818s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Groove rings */
+.grooves {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px,
+      transparent 1px, transparent 4px
+    );
+  pointer-events: none;
+}
+
+/* Album art label */
+.label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 42%;
+  height: 42%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.labelImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.labelBlank {
+  width: 100%;
+  height: 100%;
+  background: #2a1a0a;
+}
+
+/* Spindle */
+.spindle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #888, #333);
+  border: 1px solid #555;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Pause overlay */
+.pauseOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.pauseIcon {
+  font-size: 2.5rem;
+  color: rgba(232,224,212,0.7);
+}
+
+/* Subtle gloss sheen */
+.gloss {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 200deg,
+    transparent 0%, rgba(255,255,255,0.04) 15%,
+    transparent 30%, rgba(255,255,255,0.02) 60%,
+    transparent 80%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Bottom panel ── */
+.panel {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.4rem 1.2rem;
+  background: rgba(8, 5, 2, 0.82);
+  border-top: 1px solid rgba(200,169,110,0.15);
+  backdrop-filter: blur(6px);
+  margin-top: 1rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Now playing */
+.nowPlaying {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sideTag {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+
+.trackName {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.albumName {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.artist {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Progress */
+.progressWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.time {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--color-text-dim);
+  flex-shrink: 0;
+}
+
+.progressBar {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-accent);
+  transition: width 500ms linear;
+}
+
+/* Setlist */
+.setlist {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  border-top: 1px solid var(--color-border-faint);
+  padding-top: 0.4rem;
+}
+
+.setlist::-webkit-scrollbar { display: none; }
+
+.setlistTrack {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.28rem 0;
+  border-bottom: 1px solid var(--color-border-faint);
+  transition: opacity 150ms ease-in-out;
+  opacity: 0.45;
+}
+
+.setlistActive {
+  opacity: 1;
+}
+
+.setlistNum {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--color-text-dim);
+  width: 1.2rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.setlistName {
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  color: var(--color-text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.setlistActive .setlistName {
+  color: var(--color-accent);
+}
+
+.setlistDur {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--color-text-dim);
+  flex-shrink: 0;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 0.6rem;
+  padding-top: 0.3rem;
+}
+
+.btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+
+.btnStop:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.statusMsg {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--color-text-dim);
+  font-style: italic;
+}

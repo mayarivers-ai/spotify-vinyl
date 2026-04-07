@@ -1,0 +1,200 @@
+.screen {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem;
+}
+
+.back {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  margin-bottom: 2.5rem;
+  padding: 0;
+  transition: color 200ms ease-in-out;
+}
+
+.back:hover {
+  color: var(--color-text);
+}
+
+.layout {
+  display: flex;
+  gap: 3rem;
+  width: 100%;
+  max-width: 900px;
+  align-items: flex-start;
+}
+
+.coverWrap {
+  flex-shrink: 0;
+}
+
+.cover {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  display: block;
+}
+
+.coverPlaceholder {
+  width: 320px;
+  height: 320px;
+  background-color: var(--color-surface);
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.albumTitle {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+
+.artist {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.06em;
+}
+
+.metaLabel {
+  color: var(--color-text-muted);
+  margin-right: 0.3rem;
+}
+
+.tracklist {
+  display: flex;
+  gap: 2rem;
+}
+
+.side {
+  flex: 1;
+  min-width: 0;
+}
+
+.sideLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.4rem;
+}
+
+.track {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--color-border-faint);
+}
+
+.trackNum {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--color-text-dim);
+  width: 1.2rem;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.trackName {
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  color: var(--color-text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trackDuration {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-text-dim);
+  flex-shrink: 0;
+}
+
+.sourceNote {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-text-dim);
+  margin-top: 0.8rem;
+  font-style: italic;
+}
+
+.actions {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.playBtn {
+  background: none;
+  border: 1px solid var(--color-text-muted);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.playBtn:hover:not(:disabled) {
+  border-color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+.playBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.countdown {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+}
+
+.loadingNote {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  font-style: italic;
+}

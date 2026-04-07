@@ -1,0 +1,172 @@
+.screen {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.turntable {
+  position: relative;
+  width: 360px;
+  height: 360px;
+}
+
+/* Spinning disc */
+.disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--color-label-bg) 0%,
+    var(--color-label-bg) 28%,
+    #1a1a1a 28.5%,
+    #111 32%,
+    #0d0d0d 35%,
+    #111 38%,
+    #0d0d0d 42%,
+    #111 46%,
+    #0d0d0d 50%,
+    #111 54%,
+    #0d0d0d 58%,
+    #111 62%,
+    #0d0d0d 68%,
+    #111 72%,
+    #0d0d0d 80%,
+    #111 90%,
+    #0d0d0d 100%
+  );
+  animation: spin 1.818s linear infinite;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+.disc.paused {
+  animation-play-state: paused;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Album art label in center */
+.label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 56%;
+  height: 56%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.labelImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.labelPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: #2a1a0a;
+}
+
+/* Center spindle hole */
+.spindle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #555;
+}
+
+/* Tonearm / needle */
+.tonearmWrap {
+  position: absolute;
+  top: -20px;
+  right: -40px;
+  width: 80px;
+  height: 220px;
+  transform-origin: top center;
+  transition: transform 500ms ease-in-out;
+}
+
+.tonearm {
+  width: 4px;
+  height: 180px;
+  background: linear-gradient(to bottom, #666, #444);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.needle {
+  width: 10px;
+  height: 10px;
+  background: #888;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+/* Info overlay */
+.info {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.sideIndicator {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.albumName {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin-bottom: 0.3rem;
+}
+
+.position {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+.controls {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.controlBtn {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.controlBtn:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
