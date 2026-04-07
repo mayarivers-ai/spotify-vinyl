@@ -81,15 +81,18 @@ export class SpotifyController {
       this.onStateChange?.(this.mapState(state as SpotifyWebPlaybackState))
     })
 
-    player.addListener('initialization_error', ({ message }: { message: string }) => {
+    player.addListener('initialization_error', (data: unknown) => {
+      const { message } = data as { message: string }
       this.onError?.(`Initialization error: ${message}`)
     })
 
-    player.addListener('authentication_error', ({ message }: { message: string }) => {
+    player.addListener('authentication_error', (data: unknown) => {
+      const { message } = data as { message: string }
       this.onError?.(`Auth error: ${message}`)
     })
 
-    player.addListener('account_error', ({ message }: { message: string }) => {
+    player.addListener('account_error', (data: unknown) => {
+      const { message } = data as { message: string }
       this.onError?.(`Account error (Spotify Premium required): ${message}`)
     })
 
