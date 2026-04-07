@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useI18n } from '../../i18n'
 import styles from './FlipModal.module.css'
 
 const ANIM_DURATION = 3000
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function FlipModal({ onConfirm, onCancel }: Props) {
+  const { t } = useI18n()
   const [animDone, setAnimDone] = useState(false)
   const [progress, setProgress] = useState(0)
   const [visible, setVisible] = useState(false)
@@ -48,8 +50,8 @@ export function FlipModal({ onConfirm, onCancel }: Props) {
       <div className={styles.panel}>
         <div className={styles.disc} />
 
-        <p className={styles.message}>Dale la vuelta al disco</p>
-        <p className={styles.sub}>CARA B</p>
+        <p className={styles.message}>{t.flipMessage}</p>
+        <p className={styles.sub}>{t.sideB.replace('▶ ', '')}</p>
 
         <button
           className={styles.confirmBtn}
@@ -61,7 +63,7 @@ export function FlipModal({ onConfirm, onCancel }: Props) {
           onTouchEnd={cancelHold}
           style={{ '--hold-progress': `${progress}%` } as React.CSSProperties}
         >
-          {animDone ? 'Mantener para confirmar' : 'Girando...'}
+          {animDone ? t.holdToConfirm : t.flipping}
         </button>
       </div>
     </div>

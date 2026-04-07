@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import React from 'react'
 import { useVinylStore } from './store/useVinylStore'
 import { getStoredToken, handleCallback } from './modules/spotify/SpotifyAuth'
 import { initiateLogin } from './modules/spotify/SpotifyAuth'
 import { RoomScreen } from './screens/RoomScreen/RoomScreen'
+import { useI18n, LangToggle } from './i18n'
 
 const MONO: React.CSSProperties = { fontFamily: 'Courier New, monospace' }
 
@@ -11,6 +13,8 @@ const isMobile = () =>
   /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.innerWidth < 768
 
 function MobileWall() {
+  const { t } = useI18n()
+  const lines = t.mobileText.split('\n\n')
   return (
     <div style={{
       position: 'fixed', inset: 0,
@@ -19,6 +23,7 @@ function MobileWall() {
       alignItems: 'center', justifyContent: 'center',
       gap: '1.4rem', padding: '2rem', textAlign: 'center',
     }}>
+      <LangToggle style={{ position: 'absolute', top: '1.2rem', right: '1.2rem' }} />
       <div style={{ fontSize: '2.4rem' }}>🎚️</div>
       <h1 style={{
         fontFamily: 'Georgia, serif', fontWeight: 400,
@@ -33,9 +38,7 @@ function MobileWall() {
         letterSpacing: '0.1em', lineHeight: 1.9,
         maxWidth: '280px', margin: 0,
       }}>
-        Esta experiencia está diseñada para pantallas grandes.
-        <br /><br />
-        Ábrela desde tu ordenador para disfrutarla como se merece.
+        {lines[0]}<br /><br />{lines[1]}
       </p>
       <div style={{
         marginTop: '0.5rem',
@@ -52,6 +55,7 @@ function MobileWall() {
 }
 
 function OnboardingInfo() {
+  const { t } = useI18n()
   const [open, setOpen] = useState(false)
 
   return (
@@ -63,56 +67,35 @@ function OnboardingInfo() {
           ...MONO, fontSize: '0.6rem',
           color: 'rgba(232,224,212,0.3)',
           letterSpacing: '0.16em', textTransform: 'uppercase',
-          padding: '0.3rem',
-          transition: 'color 200ms',
+          padding: '0.3rem', transition: 'color 200ms',
         }}
         onMouseEnter={e => (e.currentTarget.style.color = 'rgba(232,224,212,0.6)')}
         onMouseLeave={e => (e.currentTarget.style.color = 'rgba(232,224,212,0.3)')}
       >
-        {open ? '— cerrar' : '¿qué es esto? —'}
+        {open ? t.closeInfo : t.whatIsThis}
       </button>
 
       {open && (
         <div style={{
-          marginTop: '0.8rem',
-          maxWidth: '300px',
+          marginTop: '0.8rem', maxWidth: '300px',
           padding: '1.2rem 1.5rem',
           border: '1px solid rgba(232,224,212,0.1)',
           backdropFilter: 'blur(8px)',
-          background: 'rgba(0,0,0,0.45)',
-          textAlign: 'left',
+          background: 'rgba(0,0,0,0.45)', textAlign: 'left',
         }}>
           <p style={{
             ...MONO, fontSize: '0.65rem',
             color: 'rgba(232,224,212,0.55)',
-            letterSpacing: '0.06em', lineHeight: 2,
-            margin: 0,
+            letterSpacing: '0.06em', lineHeight: 2, margin: 0,
           }}>
-            Una sala de vinilos virtual conectada a tu Spotify.
-            Pon un disco en el plato, escucha la cara A,
-            dale la vuelta, escucha la cara B — como siempre fue.
+            {t.onboardingDesc}
           </p>
-          <div style={{
-            marginTop: '1rem', paddingTop: '0.8rem',
-            borderTop: '1px solid rgba(232,224,212,0.08)',
-          }}>
-            <p style={{
-              ...MONO, fontSize: '0.58rem',
-              color: 'rgba(200,169,110,0.65)',
-              letterSpacing: '0.14em', textTransform: 'uppercase',
-              margin: '0 0 0.5rem',
-            }}>
-              Necesitas
+          <div style={{ marginTop: '1rem', paddingTop: '0.8rem', borderTop: '1px solid rgba(232,224,212,0.08)' }}>
+            <p style={{ ...MONO, fontSize: '0.58rem', color: 'rgba(200,169,110,0.65)', letterSpacing: '0.14em', textTransform: 'uppercase', margin: '0 0 0.5rem' }}>
+              {t.needsTitle}
             </p>
-            <p style={{
-              ...MONO, fontSize: '0.62rem',
-              color: 'rgba(232,224,212,0.4)',
-              letterSpacing: '0.05em', lineHeight: 2,
-              margin: 0,
-            }}>
-              · Spotify Premium<br />
-              · Spotify abierto en algún dispositivo<br />
-              · Navegador de escritorio
+            <p style={{ ...MONO, fontSize: '0.62rem', color: 'rgba(232,224,212,0.4)', letterSpacing: '0.05em', lineHeight: 2, margin: 0 }}>
+              {t.need1}<br />{t.need2}<br />{t.need3}
             </p>
           </div>
         </div>
@@ -122,6 +105,7 @@ function OnboardingInfo() {
 }
 
 function LoginScreen() {
+  const { t } = useI18n()
   const [entering, setEntering] = useState(false)
   const [mobile] = useState(isMobile)
 
@@ -190,7 +174,7 @@ function LoginScreen() {
           margin: 0,
           textShadow: '0 1px 10px rgba(0,0,0,0.8)',
         }}>
-          Escucha como se escuchaba antes
+          {t.tagline}
         </p>
         <button
           onClick={handleEnter}
@@ -217,16 +201,18 @@ function LoginScreen() {
             ;(e.target as HTMLButtonElement).style.color = 'var(--color-text)'
           }}
         >
-          Entrar
+          {t.enter}
         </button>
 
         <OnboardingInfo />
+        <LangToggle style={{ marginTop: '0.4rem' }} />
       </div>
     </div>
   )
 }
 
 function CallbackHandler() {
+  const { t } = useI18n()
   const navigate = useNavigate()
   const setToken = useVinylStore((s) => s.setToken)
   const initEngines = useVinylStore((s) => s.initEngines)
@@ -237,34 +223,19 @@ function CallbackHandler() {
     const code = params.get('code')
     const errorParam = params.get('error')
 
-    if (errorParam) {
-      setError(`Spotify rechazó el acceso: ${errorParam}`)
-      return
-    }
-    if (!code) {
-      setError('No se recibió código de autorización')
-      return
-    }
+    if (errorParam) { setError(`Spotify: ${errorParam}`); return }
+    if (!code) { setError('No auth code received'); return }
 
     handleCallback(code)
-      .then((token) => {
-        setToken(token)
-        initEngines()
-        navigate('/room', { replace: true })
-      })
+      .then((token) => { setToken(token); initEngines(); navigate('/room', { replace: true }) })
       .catch((e: Error) => setError(e.message))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const baseStyle: React.CSSProperties = {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '1rem',
-    fontFamily: 'Courier New, monospace',
-    fontSize: '0.8rem',
+    minHeight: '100vh', display: 'flex', flexDirection: 'column',
+    alignItems: 'center', justifyContent: 'center',
+    gap: '1rem', fontFamily: 'Courier New, monospace', fontSize: '0.8rem',
   }
 
   if (error) {
@@ -275,7 +246,7 @@ function CallbackHandler() {
           onClick={() => navigate('/')}
           style={{ background: 'none', border: '1px solid #c0392b', color: '#c0392b', padding: '0.5rem 1rem', cursor: 'pointer', fontFamily: 'inherit' }}
         >
-          Volver al inicio
+          {t.backToStart}
         </button>
       </div>
     )
@@ -283,7 +254,7 @@ function CallbackHandler() {
 
   return (
     <div style={{ ...baseStyle, color: 'var(--color-text-dim)' }}>
-      Autenticando...
+      {t.authenticating}
     </div>
   )
 }

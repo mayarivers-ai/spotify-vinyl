@@ -9,6 +9,7 @@ import { AlbumDetailOverlay } from './AlbumDetailOverlay'
 import { TurntableOverlay } from './TurntableOverlay'
 import { FlipModal } from './FlipModal'
 import { OnboardingTour, hasSeenOnboarding } from './OnboardingTour'
+import { useI18n } from '../../i18n'
 import styles from './RoomScreen.module.css'
 
 export function RoomScreen() {
@@ -28,6 +29,7 @@ export function RoomScreen() {
     navigateTo(view)
   }, [_audioEngine, navigateTo])
 
+  const { t } = useI18n()
   const [detailAlbum, setDetailAlbum] = useState<SpotifyAlbum | null>(null)
   const [showFlip, setShowFlip] = useState(false)
   const [showOnboarding, setShowOnboarding] = useState(!hasSeenOnboarding())
@@ -95,7 +97,7 @@ export function RoomScreen() {
           className={styles.backBtn}
           onClick={() => handleNavigate('full')}
         >
-          ← SALA
+          {t.backRoom}
         </button>
       )}
 
@@ -103,10 +105,10 @@ export function RoomScreen() {
       {!nav.animating && nav.view === 'full' && (
         <>
           <div className={`${styles.hotspot} ${styles.hotspotLeft}`} onClick={() => handleNavigate('shelf')}>
-            <span className={styles.hotspotLabel}>ESTANTERÍA</span>
+            <span className={styles.hotspotLabel}>{t.shelf}</span>
           </div>
           <div className={`${styles.hotspot} ${styles.hotspotRight}`} onClick={() => handleNavigate('turntable')}>
-            <span className={styles.hotspotLabel}>TOCADISCOS</span>
+            <span className={styles.hotspotLabel}>{t.turntable}</span>
           </div>
         </>
       )}

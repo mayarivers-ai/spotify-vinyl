@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useVinylStore } from '../../store/useVinylStore'
 import type { SpotifyTrack } from '../../modules/spotify/types'
+import { useI18n } from '../../i18n'
 import styles from './TurntableOverlay.module.css'
 
 function formatMs(ms: number): string {
@@ -23,6 +24,7 @@ interface Props {
 }
 
 export function TurntableOverlay({ onTriggerFlip, onStop }: Props) {
+  const { t } = useI18n()
   const {
     selectedAlbum,
     resolvedSides,
@@ -57,7 +59,7 @@ export function TurntableOverlay({ onTriggerFlip, onStop }: Props) {
   if (isIdle || !selectedAlbum) {
     return (
       <div className={styles.overlay}>
-        <div className={styles.emptyMsg}>Sin disco en el plato</div>
+        <div className={styles.emptyMsg}>{t.noDisc}</div>
       </div>
     )
   }
@@ -83,8 +85,8 @@ export function TurntableOverlay({ onTriggerFlip, onStop }: Props) {
         <button
           className={`${styles.disc} ${isPlaying ? styles.spinning : ''}`}
           onClick={() => isActive && togglePause()}
-          title={isPaused ? 'Reanudar' : 'Pausar'}
-          aria-label={isPaused ? 'Reanudar reproducción' : 'Pausar reproducción'}
+          title={isPaused ? t.resume : t.pause}
+          aria-label={isPaused ? t.resume : t.pause}
         >
           {/* Groove rings */}
           <div className={styles.grooves} />
@@ -116,7 +118,7 @@ export function TurntableOverlay({ onTriggerFlip, onStop }: Props) {
       <div className={styles.panel}>
         {/* Current track info */}
         <div className={styles.nowPlaying}>
-          <div className={styles.sideTag}>CARA {currentSide}</div>
+          <div className={styles.sideTag}>{t.side} {currentSide}</div>
           <div className={styles.trackName}>{currentTrack?.name ?? '—'}</div>
           <div className={styles.albumName}>{selectedAlbum.name}</div>
           <div className={styles.artist}>
@@ -151,7 +153,7 @@ export function TurntableOverlay({ onTriggerFlip, onStop }: Props) {
         <div className={styles.controls}>
           {playerState === 'playing-a' && (
             <button className={styles.btn} onClick={onTriggerFlip}>
-              ↺ CARA B
+              {t.flipToB}
             </button>
           )}
           <button
@@ -159,15 +161,15 @@ export function TurntableOverlay({ onTriggerFlip, onStop }: Props) {
             onClick={onStop}
             disabled={playerState === 'lifting-needle'}
           >
-            ◼ LEVANTAR AGUJA
+            {t.liftNeedle}
           </button>
         </div>
 
         {(playerState === 'dropping-needle') && (
-          <p className={styles.statusMsg}>Bajando aguja...</p>
+          <p className={styles.statusMsg}>{t.droppingMsg}</p>
         )}
         {(playerState === 'lifting-needle') && (
-          <p className={styles.statusMsg}>Levantando aguja...</p>
+          <p className={styles.statusMsg}>{t.liftingMsg}</p>
         )}
       </div>
     </div>

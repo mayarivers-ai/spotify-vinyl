@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import React from 'react'
+import { useI18n } from '../../i18n'
 
 const STORAGE_KEY = 'vinyl_onboarding_done'
 
@@ -20,30 +21,7 @@ interface Step {
   arrowDir?: 'up' | 'down' | 'left' | 'right'
 }
 
-const STEPS: Step[] = [
-  {
-    title: 'Bienvenido a The Vinyl Room',
-    body: 'Una sala de escucha virtual conectada a tu Spotify. Aquí escuchas álbumes completos, cara A y cara B, como con un vinilo de verdad.',
-    box: { position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' },
-  },
-  {
-    title: 'La estantería',
-    body: 'Aquí están tus álbumes guardados en Spotify. Navega entre ellos y haz clic en uno para verlo.',
-    box: { position: 'fixed', top: '38%', left: '26%', transform: 'translateX(-50%)' },
-    arrowDir: 'down',
-  },
-  {
-    title: 'El tocadiscos',
-    body: 'Cuando pongas un disco, lo verás girar aquí. Controla la reproducción, pausa, y cuando acabe la cara A te pedirá que le des la vuelta.',
-    box: { position: 'fixed', top: '38%', right: '6%' },
-    arrowDir: 'down',
-  },
-  {
-    title: 'Antes de empezar',
-    body: 'Necesitas Spotify Premium y Spotify abierto en cualquier dispositivo (móvil, ordenador, tablet). Ese dispositivo será el que reproduzca la música.',
-    box: { position: 'fixed', bottom: '12%', left: '50%', transform: 'translateX(-50%)' },
-  },
-]
+// Steps are built dynamically inside the component using translations
 
 // ─── Arrow SVG ────────────────────────────────────────────────────────────────
 
@@ -78,6 +56,13 @@ interface Props {
 }
 
 export function OnboardingTour({ onDone }: Props) {
+  const { t } = useI18n()
+  const STEPS: Step[] = [
+    { title: t.ob1Title, body: t.ob1Body, box: { position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' } },
+    { title: t.ob2Title, body: t.ob2Body, box: { position: 'fixed', top: '38%', left: '26%', transform: 'translateX(-50%)' }, arrowDir: 'down' },
+    { title: t.ob3Title, body: t.ob3Body, box: { position: 'fixed', top: '38%', right: '6%' }, arrowDir: 'down' },
+    { title: t.ob4Title, body: t.ob4Body, box: { position: 'fixed', bottom: '12%', left: '50%', transform: 'translateX(-50%)' } },
+  ]
   const [step, setStep] = useState(0)
   const current = STEPS[step]
   const isLast = step === STEPS.length - 1
@@ -176,7 +161,7 @@ export function OnboardingTour({ onDone }: Props) {
             onMouseEnter={e => (e.currentTarget.style.color = 'rgba(232,224,212,0.5)')}
             onMouseLeave={e => (e.currentTarget.style.color = 'rgba(232,224,212,0.25)')}
           >
-            Saltar
+            {t.skip}
           </button>
 
           <button
@@ -200,7 +185,7 @@ export function OnboardingTour({ onDone }: Props) {
               e.currentTarget.style.color = 'rgba(200,169,110,0.9)'
             }}
           >
-            {isLast ? 'Empezar →' : 'Siguiente →'}
+            {isLast ? t.start : t.next}
           </button>
         </div>
 

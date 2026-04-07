@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { useVinylStore } from '../../store/useVinylStore'
 import type { SpotifyAlbum } from '../../modules/spotify/types'
+import { useI18n } from '../../i18n'
 import styles from './CoverFlow.module.css'
 
 type SortKey = 'added' | 'year' | 'artist' | 'name'
@@ -23,7 +24,7 @@ async function fetchSavedAlbums(token: string): Promise<SpotifyAlbum[]> {
   const res = await fetch('https://api.spotify.com/v1/me/albums?limit=50', {
     headers: { Authorization: `Bearer ${token}` },
   })
-  if (!res.ok) throw new Error('No se pudo cargar la biblioteca')
+  if (!res.ok) throw new Error('Could not load library')
   const data = await res.json()
   return data.items.map((i: { album: SpotifyAlbum }) => i.album)
 }
@@ -87,6 +88,10 @@ interface Props {
 }
 
 export function CoverFlow({ onSelectAlbum }: Props) {
+  const { t } = useI18n()
+  const sortLabels: Record<SortKey, string> = {
+    added: t.sortRecent, year: t.sortYear, artist: t.sortArtist, name: t.sortName,
+  }
   const { spotifyToken, albums, setAlbums } = useVinylStore()
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState<string | null>(null)
@@ -176,7 +181,7 @@ export function CoverFlow({ onSelectAlbum }: Props) {
 
   if (loading) return (
     <div className={styles.overlay}>
-      <p className={styles.status}>Cargando biblioteca...</p>
+      <p className={styles.status}>{t.loadingLibrary}</p>
     </div>
   )
 
@@ -197,7 +202,7 @@ export function CoverFlow({ onSelectAlbum }: Props) {
             className={`${styles.sortBtn} ${sortKey === key ? styles.sortActive : ''}`}
             onClick={() => setSortKey(key)}
           >
-            {SORT_LABELS[key]}
+            {sortLabels[key]}
           </button>
         ))}
       </div>
@@ -271,7 +276,7 @@ export function CoverFlow({ onSelectAlbum }: Props) {
           <div className={styles.infoYear}>
             {current.release_date?.split('-')[0] ?? ''}
             <span className={styles.infoTracks}>
-              {' · '}{current.total_tracks} pistas
+              {' · '}{current.total_tracks} {t.tracks}
             </span>
           </div>
         </div>

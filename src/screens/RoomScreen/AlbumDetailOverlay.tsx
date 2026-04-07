@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useVinylStore } from '../../store/useVinylStore'
 import type { SpotifyAlbum } from '../../modules/spotify/types'
 import { TIMINGS } from '../../modules/slowness/SlownessSystem'
+import { useI18n } from '../../i18n'
 import styles from './AlbumDetailOverlay.module.css'
 
 function formatMs(ms: number): string {
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export function AlbumDetailOverlay({ album, onClose, onPlay }: Props) {
+  const { t } = useI18n()
   const { resolvedSides, playerState } = useVinylStore()
   const [secondsLeft, setSecondsLeft] = useState(Math.ceil(TIMINGS.ALBUM_READ_MIN / 1000))
   const [canPlay, setCanPlay] = useState(false)
@@ -67,7 +69,7 @@ export function AlbumDetailOverlay({ album, onClose, onPlay }: Props) {
         {resolvedSides ? (
           <div className={styles.tracklist}>
             <div className={styles.side}>
-              <div className={styles.sideLabel}>▶ CARA A</div>
+              <div className={styles.sideLabel}>{t.sideA}</div>
               {resolvedSides.sideA.map((t, i) => (
                 <div key={t.id} className={styles.track}>
                   <span className={styles.trackNum}>{i + 1}</span>
@@ -77,7 +79,7 @@ export function AlbumDetailOverlay({ album, onClose, onPlay }: Props) {
               ))}
             </div>
             <div className={styles.side}>
-              <div className={styles.sideLabel}>▶ CARA B</div>
+              <div className={styles.sideLabel}>{t.sideB}</div>
               {resolvedSides.sideB.map((t, i) => (
                 <div key={t.id} className={styles.track}>
                   <span className={styles.trackNum}>{i + 1}</span>
@@ -87,11 +89,11 @@ export function AlbumDetailOverlay({ album, onClose, onPlay }: Props) {
               ))}
             </div>
             {resolvedSides.source === 'auto' && (
-              <p className={styles.sourceNote}>División automática</p>
+              <p className={styles.sourceNote}>{t.autoSplit}</p>
             )}
           </div>
         ) : (
-          <p className={styles.loading}>Resolviendo caras...</p>
+          <p className={styles.loading}>{t.resolvingSides}</p>
         )}
 
         <div className={styles.actions}>
@@ -100,9 +102,7 @@ export function AlbumDetailOverlay({ album, onClose, onPlay }: Props) {
             onClick={handlePlay}
             disabled={!canPlay || playerState === 'dropping-needle'}
           >
-            {playerState === 'dropping-needle'
-              ? 'BAJANDO AGUJA...'
-              : 'PONER EN EL PLATO'}
+            {playerState === 'dropping-needle' ? t.droppingNeedle : t.putOnDeck}
           </button>
           {!canPlay && secondsLeft > 0 && (
             <span className={styles.countdown}>{secondsLeft}s</span>
